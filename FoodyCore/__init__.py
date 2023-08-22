@@ -4,7 +4,7 @@ from FoodyConfig.config import AutoCinfig
 
 from .CLI.create_cli import create_commands
 from .CLI.status_cli import status_cli
-
+from .CLI.backup_cli import backup_commands
 
 
 def create_app():
@@ -51,3 +51,4 @@ import FoodyCore.baseView
 # register cli
 app.cli.add_command(create_commands)
 app.cli.add_command(status_cli)
+app.cli.add_command(backup_commands)

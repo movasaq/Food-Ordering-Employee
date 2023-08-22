@@ -1,43 +1,21 @@
 from FoodyWeb import web
-from flask import redirect, url_for, send_from_directory, current_app
+from flask import send_from_directory, url_for, current_app, redirect
 
 from FoodyConfig.config import STATUS, Media
-from FoodyAdmin.model import SiteSetting
 
 
 @web.route("/Serve/<path:path>")
 def Serve(path):
     """
-    This View Server Media Content
-    Base of App Debug
-    if debug is one this view itself serve media otherwise
-    this view let nginx serve Static files
+    Serve Static files for development Mode (Only When APP_DEBUG=True)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+        Only In Debug Mode Serving Files for development Purposes
     """
     if STATUS:
         return send_from_directory(Media, path)  # flask serve
     else:
-        return redirect(current_app.config.get("DOMAIN") + f'/Media/{path}')  # nginx serve
-        # return send_from_directory(Media, path) # flask serve
+        return f"This File Only Can be Served Via Nginx WebServer,,, <A href='{current_app.config.get('DOMAIN')+path}'>{current_app.config.get('DOMAIN')+path}</A>", 400
 
-
-@web.route("/logo.png")
-def serve_app_logo():
-    """
-    this view serve app logo
-    if there is no image set for app logo
-     return default logo image
-    """
-    if (site := SiteSetting.query.filter_by(tag="setting").first()):
-        if site.Logo:
-            if not STATUS:
-                return redirect(current_app.config.get("DOMAIN") + f'/Media/{site.Logo}')  # nginx serve
-            else:
-                return send_from_directory(Media, site.Logo)
-
-    if not STATUS:
-        return redirect(current_app.config.get("DOMAIN") + "/Media/logo.png")  # nginx serve
-
-    return send_from_directory(Media, "logo.png")
 
 
 @web.route("/")

@@ -1,4 +1,3 @@
-import uuid
 
 from FoodyCore.model import BaseModel
 from sqlalchemy import String, Boolean, Column, ForeignKey, Integer
@@ -28,7 +27,7 @@ class User(BaseModel):
 
     Orders = db.relationship("Order", cascade="all,delete", backref="GetUser")
 
-    def GetUserName(self):
+    def GetUserName(self) -> str:
         return f"{self.FirstName} {self.LastName}"
 
     def SetPassword(self, password: str) -> None:
@@ -39,11 +38,11 @@ class User(BaseModel):
         """ Check Password with Hashed password """
         return check_password_hash(self.Password, password)
 
-    def Is_Active(self):
+    def Is_Active(self) -> bool:
         """ check account is active """
         return self.Active
 
-    def SetActive(self):
+    def SetActive(self) -> None:
         """Change user status  to active"""
         self.Active = True
 

@@ -57,7 +57,7 @@
     white-space: nowrap; /* Keep text in one line */
     margin: 0 auto; /* Center the container horizontally */
     letter-spacing: .0em; /* Adjust spacing between characters */
-    animation: typing 6s steps(40) infinite;
+    animation: typing 6s steps(55) infinite;
 }
 
 /* Define the typing animation */

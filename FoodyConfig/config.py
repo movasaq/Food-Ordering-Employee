@@ -27,8 +27,6 @@ NAME_DB = os.environ.get('DATABASE_NAME')
 DATABASE_TABLE_PREFIX = os.environ.get("DATABASE_TABLE_PREFIX", "FOODY_")
 
 DOMAIN = os.environ.get("DOMAIN", "").lower().strip()
-if not DOMAIN.startswith("https://"):
-    raise ValueError("Domain Must Start with protocol (http, https) ")
 
 MAX_ORDER_TIMEOUT_DAY = 7
 # this is the default for showing ordering food that means user only can order for only a week ahead
@@ -79,6 +77,7 @@ class BaseConfig:
     MAIL_DEBUG = STATUS
 
     DOMAIN = DOMAIN
+    # SERVER_NAME = DOMAIN
 
 
 class Development(BaseConfig):

@@ -7,7 +7,7 @@ include this header only in user templates ~!
     <nav class="navbar navbar-expand-md navbar-header sticky-top bg-dark" >
         <div class="container-fluid">
             <a href="{{ url_for('user.index_view') }}" class="navbar-brand">
-                <img src="{{ url_for('web.serve_app_logo') }}"  class="rounded-circle" alt="اتوماسیون غذا" style="width: 80px;">
+                <img src="{{ serve_app_logo() }}"  class="rounded-circle" alt="اتوماسیون غذا" style="width: 80px;">
             </a>
             <span class="navbar-toggler" id="navbar-dropdown" data-bs-target="#navbar-header"  data-bs-toggle="collapse">
                 <div class="line line-1 rounded"></div>

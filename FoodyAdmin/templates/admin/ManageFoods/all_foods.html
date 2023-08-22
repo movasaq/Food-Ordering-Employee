@@ -1,11 +1,11 @@
 {% extends "admin/base.html" %}
 
 {% block title %}
-لیست منوی غذایی
-{%  endblock %}
+        لیست منوی غذایی
+{% endblock %}
 
-{%  block admin_style %}
-{%  endblock %}
+{% block admin_style %}
+{% endblock %}
 
 {% block main_content %}
 <div class="row justify-content-center align-items-center">
@@ -27,7 +27,7 @@
                         </div>
                         <div class="card-body" >
                             <img class="card-img-top w-100" style="min-height: 400px; max-height: 500px"
-                                 src="{{ url_for('web.Serve', path='/Foods/'+food.GetImage(1)) }}"
+                                 src="{{ ('/Foods/'+food.GetImage(1)) | Serve }}"
                             >
                             <p class="text-center mt-3 mb-0">{{food.Name}}</p>
                             <p class="text-center">{{ food.Description }}</p>
@@ -43,8 +43,6 @@
                               </button>
                               <ul class="dropdown-menu">
                                   <li><a class="dropdown-item" href="{{ url_for('admin.edit_food', FoodKey=food.PublicKey) }}">ویرایش</a></li>
-{#                                  <li><hr class="dropdown-divider m-0 p-0"></li>#}
-{#                                  <li><a class="dropdown-item" href="#">غیرفعال سازی</a></li>#}
                               </ul>
 
                         </div>

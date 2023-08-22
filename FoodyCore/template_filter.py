@@ -1,12 +1,37 @@
 import datetime
 import khayyam
 
+from flask import url_for
 from FoodyAuth.model import Section
 from FoodyCore import app
 from FoodyCore.utils import TimeStamp
 from FoodyOrder.model import FoodList, Day
 from FoodyAuth.model import User
 from FoodyAdmin.model import Admin
+
+from FoodyConfig.config import STATUS
+
+
+
+
+
+
+
+@app.template_filter("Serve")
+def Serve(path):
+    """
+        this template filter generate media link base of Debug Mode (APP_DEBUG)
+
+        if debug mode is on Flask app Serve Static files and generate a link to web.Serve View
+        otherwise this view generate link for Nginx path /Media
+    """
+    if STATUS:
+        return url_for("web.Serve", path=path) # flask serve
+    else:
+        return f'/Media/{path}'  # nginx serve
+        # return app.config.get("DOMAIN", "")+f'/Media/{path}'  #nginx serve
+
+
 
 
 @app.template_filter("Convert2Persian")

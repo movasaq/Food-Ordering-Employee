@@ -216,21 +216,3 @@ def create_fake_user():
         else:
             counter += 1
             print(f"[{datetime.datetime.utcnow()}][{counter}] user created")
-
-
-@create_commands.command("deleteallusers")
-def delete_all_users():
-    """
-        delete all users in app
-        @params
-            None
-
-    """
-
-    from FoodyCore.extension import db
-    from FoodyAuth.model import User
-
-    for each in User.query.all():
-        db.session.delete(each)
-    db.session.commit()
-

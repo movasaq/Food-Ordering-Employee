@@ -40,7 +40,7 @@ async function query_fetch(start, end, url) {
 }
 
 async function GetAllUsersInfo() { // this function get all users info by sections
-    let response = await fetch(`/admin//api/All/Users/`, {
+    let response = await fetch(`/admin/api/All/Users/`, {
         method: "GET",
         headers: {
             "X-CSRFToken": document.querySelector("#token").value
@@ -57,12 +57,12 @@ async function GetAllUsersInfo() { // this function get all users info by sectio
 
 window.addEventListener("DOMContentLoaded", async (e) => {
     const Today = moment().toISOString();
-    const PreMonth = moment().subtract(1, 'week').toISOString();
+    const PreMonth = moment().subtract(4, 'week').toISOString();
 
     let GetOrdersInfo_response = await query_fetch(Today, PreMonth, "api/AllOrders");
     let GetSectionOrdersInfo_response = await query_fetch(Today, PreMonth, "api/AllOrders/Sections");
     let GetAllUsersInfo_response = await query_fetch(start = null, end = null, url = "api/All/Users");
-    let Top5Usersinfo_response = await query_fetch(start = null, end = null, url = "api/Top/User/Order/")
+    let Top5Usersinfo_response = await query_fetch(start = null, end = null, url = "api/Top/User/Order")
 
 
     let xValues = []

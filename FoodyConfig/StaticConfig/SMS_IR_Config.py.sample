@@ -22,9 +22,6 @@
 
 """
 
-
-
-
 # WELCOME_NEW_USER template content should be like:
 """
 همکار محترم #EMPLOYEE_NAME#
@@ -35,8 +32,6 @@
 www.EXAMPLE.ir
 
 """
-
-
 
 
 # sms ir templates id

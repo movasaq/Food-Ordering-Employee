@@ -42,7 +42,7 @@ def All_Orders_API():
 
     data = []
     for each in range(0, (f - e).days):
-        time = f + datetime.timedelta(days=each)
+        time = f - datetime.timedelta(days=each)
         temp = {}
         query = Order.query.filter(Order.OrderDate == time).count()
 
@@ -51,6 +51,8 @@ def All_Orders_API():
         temp["order_count"] = query
         data.append(temp)
 
+
+    data.reverse()
     return jsonify({"status": "success", "data": data}), 200
 
 
@@ -152,14 +154,12 @@ def Top_Five_User_Order_API():
         print(e)
         TopFiveUsers = []
 
-
-
-
     data = []
     for each in TopFiveUsers:
         user, count = each[0].GetUserName(), each[1]
+
         temp = {
-            "user_name": user,
+            "user_name": user + f"-{Section.query.get(each[0].SectionID).Name or '' }",
             "order_count": count
         }
         data.append(temp)

@@ -75,7 +75,7 @@ def panel_get():
 
     ctx = {
         "user":request.user_object,
-        "this_month_orders": Order.query.filter(Order.UserID == request.user_object.id).filter(Order.OrderDate > startofMonth).filter(Order.OrderDate < endofMonth).count()
+        "this_month_orders": Order.query.filter(Order.UserID == request.user_object.id).filter(Order.OrderDate >= startofMonth).filter(Order.OrderDate <= endofMonth).count()
     }
     return render_template("user/panel.html", ctx=ctx, form=form)
 

@@ -5,11 +5,6 @@
 {% endblock %}
 
 {% block admin_style %}
-    <style>
-        .card-index {
-            z-index: -1 !important;
-        }
-    </style>
 {% endblock %}
 
 {% block main_content %}
@@ -103,9 +98,9 @@
 
         {#    charts #}
 
-        <div class="col-lg-6 col-md-12 col-12 my-5">
+        <div class="col-lg-6 col-md-12 col-12 my-5 p-0 m-0">
             <div>
-                <h3 class="text-center">نمودار سفارشات سامانه در 1 هفته اخیر</h3>
+                <h3 class="text-center">نمودار سفارشات سامانه در 1 ماه اخیر</h3>
             </div>
             <div>
                 <canvas id="last-week-orders" class="w-100 h-100"></canvas>
@@ -113,9 +108,9 @@
         </div>
 
 
-        <div class="col-lg-6 col-md-12 col-12 my-5">
+        <div class="col-lg-6 col-md-12 col-12 my-5 p-0 m-0">
             <div>
-                <h3 class="text-center">نمودار سفارشات سامانه در 1 هفته اخیر</h3>
+                <h3 class="text-center">نمودار سفارشات سامانه در 1 ماه اخیر</h3>
             </div>
             <div>
                 <canvas id="one-week-orders-section" class="w-100 h-100"></canvas>

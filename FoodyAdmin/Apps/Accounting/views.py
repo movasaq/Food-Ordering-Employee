@@ -24,34 +24,39 @@ def sort_orders(X: Order):
 @admin_login_required
 def report_today_get():
     """
-    This view report today orders
+    Rport today orders
     """
     today = datetime.date.today()
 
-    today_orders = Order.query.filter(Order.OrderDate == today).all()
-    all_sections = db.session.query(Section.id).distinct().all()
+    # today_orders = Order.query.filter(Order.OrderDate == today).all()
+    all_sections = db.session.query(Section.id, Section.Name).distinct().all()
 
-    try:  # sort order by Sections
-        today_orders = sorted(today_orders, key=lambda order: User.query.get(order.UserID).SectionID, reverse=False)
-    except Exception as e:
-        print(e)
+    # try:  # sort order by Sections
+    #     today_orders = sorted(today_orders, key=lambda order: User.query.get(order.UserID).SectionID, reverse=False)
+    # except Exception as e:
+    #     print(e)
 
+    total_orders = 0
     sections_order = {}
     for each in all_sections:
-        section = Section.query.get(each[0])
-        Specified_section_today_orders = Order.query.join(User, Order.UserID == User.id) \
+        # section = Section.query.get(each[0])
+        Specified_section_today_orders = Order.query\
+            .join(User, Order.UserID == User.id) \
             .filter(User.SectionID == each[0]) \
-            .filter(Order.OrderDate == today).count()
-        if section and Specified_section_today_orders:
-            sections_order[section.Name] = Specified_section_today_orders
+            .filter(Order.OrderDate == today)\
+            .all()
+        total_orders += len(Specified_section_today_orders)
+
+        if Specified_section_today_orders:
+            sections_order[each[1]] = Specified_section_today_orders
+
 
     ctx = {
         "report_today": "item-active",
         "accounting": "show",
-        "today_orders": today_orders,
+        "total_orders": total_orders,
         "sections_order": sections_order
     }
-    ctx["total_orders"] = len(ctx["today_orders"])
 
     return render_template(f"{TEMPLATE_FOLDER}/report_today.html", ctx=ctx)
 
@@ -127,6 +132,7 @@ def report_section_post():
     return render_template(f"{TEMPLATE_FOLDER}/report_section_result.html", ctx=ctx, form=form)
 
 
+
 @admin.route(f"{BASE_URL}/Report/User/", methods=["GET"])
 @admin_login_required
 def report_user_get():
@@ -136,6 +142,7 @@ def report_user_get():
     }
     form = AccountingForms.ReportUserForm()
     return render_template(f"{TEMPLATE_FOLDER}/user_report.html", ctx=ctx, form=form)
+
 
 
 @admin.route(f"{BASE_URL}/Report/User/", methods=["POST"])
@@ -172,6 +179,7 @@ def report_user_post():
     ctx["end"] = endDate
 
     return render_template(f"{TEMPLATE_FOLDER}/user_report_result.html", ctx=ctx, form=form)
+
 
 
 @admin.route(f"{BASE_URL}/Report/User/this_month/<uuid:userKey>/", methods=["GET"])

@@ -208,10 +208,10 @@ def admin_login_post(token):
         flash("تلاش بیش از اندازه حساب کاربری مورد نظر قفل گردید\nبرای بازگشایی قفل به پشتیبانی مراجعه کنید", "danger")
         return redirect(request.referrer)
 
-    #  Ar-Real-Ip  =: Arvan Cloud Put Users Real Ip in a header in request := Ar-Real-Ip
-    # if this web app is hosting and getting services from other cdn providers make sure you change Ar-Real-Ip
-    userIP = request.headers.get("Ar-Real-Ip", request.remote_addr) or "0.0.0.0"
-
+    #  Ar-Real-Ip  =: Arvan Cloud Put Users Real Ip in this header in request := Ar-Real-Ip
+    #  Ar-Real-Country  =: Arvan Cloud Put Users Country Ip in this header in request := Ar-Real-Country
+                # if this web app is hosting and getting services from other cdn providers make sure you change Ar-Real-Ip
+    userIP = (request.headers.get("Ar-Real-Ip", request.remote_addr) or "0.0.0.0") +"-"+ request.headers.get("Ar-Real-Country","00")
     if not admin_db.CheckPassword(password):
         admin_db.TryNumber += 1
         try:

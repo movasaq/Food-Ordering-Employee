@@ -5,7 +5,7 @@ import uuid
 from flask import render_template, redirect, request, flash
 from FoodyAdmin import admin
 from FoodyAuth.AccessControl.decorators import admin_login_required
-from FoodyAdmin.model import Admin
+from FoodyAdmin.model import Admin, AdminLog
 from FoodyCore.extension import db
 from FoodyAdmin.model import SiteSetting
 from FoodyConfig.config import Media, VALID_IMAGE_EXTENSIONS
@@ -322,3 +322,24 @@ def update_app_description():
         flash("عملیات با موفقیت انجام شد", "success")
 
     return redirect(request.referrer)
+
+
+
+@admin.route(f"{BASE_URL}/logs/", methods=["GET"])
+@admin_login_required
+def admin_logs_get():
+    """
+        this view return admin login logs
+    """
+    page = request.args.get(key="page", type=int, default=1)
+    ctx = {
+        "manage_admins": "show",
+        "admin_logs": "item-active",
+        "current_page": page,
+    }
+    ctx["data"] = AdminLog.query.order_by(AdminLog.CreatedTime.desc()).paginate(page=page, per_page=13)
+
+    return render_template(f"{TEMPLATE_FOLDER}/admin_logs.html", ctx=ctx)
+
+
+

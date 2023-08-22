@@ -49,6 +49,7 @@
                     <thead>
                         <tr>
                             <th>نام</th>
+                            <th>بخش کاری</th>
                             <th>غذا</th>
                             <th>تاریخ سفارش</th>
                         </tr>
@@ -58,6 +59,7 @@
                     {% for order in ctx.orders %}
                             <tr>
                                 <td><span>{{ order.UserID | GetUserName }}</span></td>
+                                <td><span>{{ order.UserID | GetSectionNameByUserID }}</span></td>
                                 <td><span>{{ order.FoodID | GetFoodName }}</span></td>
                                 <td class="SectionWork"><span> {{ order.OrderDate | GetPersianDate }}</span></td>
                             </tr>

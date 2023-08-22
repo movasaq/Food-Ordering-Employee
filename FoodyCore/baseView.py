@@ -1,5 +1,7 @@
-from flask import session, request
+import uuid
 
+from flask import session, request, url_for, current_app
+from FoodyConfig.config import STATUS
 from FoodyCore import app
 import FoodyAuth.utils as AuthUtils
 
@@ -46,6 +48,7 @@ def app_context():
     from FoodyConfig.config import DOMAIN
 
 
+
     def get_app_info() -> dict:
         """
             this template filter return app info like name domain and ...
@@ -66,10 +69,35 @@ def app_context():
         site = SiteSetting.query.filter(SiteSetting.tag == "setting").firts()
         return True if site.Logo else False
 
+    def generate_uuid():
+        """
+        use this function for generating uuid in templates
+        uses for id or class attribute in html
+        """
+        return str(uuid.uuid4()).replace(" ", "").replace("-", "")
 
 
+    def serve_app_logo():
+        """
+        this view serve app logo
+        if there is no image set for app logo
+         return default logo image
+        """
+        if (site := SiteSetting.query.filter_by(tag="setting").first()):
+            if site.Logo:
+                if not STATUS:
+                    return (current_app.config.get("DOMAIN") + f'/Media/{site.Logo}')  # nginx serve
+                else:
+                    return url_for("web.Serve", path=(site.Logo))
+
+        if not STATUS:
+            return (current_app.config.get("DOMAIN") + "/Media/logo.png")  # nginx serve
+        else:
+            return url_for("web.Serve", path=("logo.png"))
 
     return {
         "get_app_info": get_app_info,
-        "check_app_logo": check_app_logo
+        "check_app_logo": check_app_logo,
+        "serve_app_logo":serve_app_logo,
+        "uuid4":generate_uuid
     }

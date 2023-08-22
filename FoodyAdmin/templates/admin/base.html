@@ -15,7 +15,7 @@
         <div class="container-fluid">
             <div class="row">
 
-                <div class="ms-auto col-lg-10 col-md-10 col-sm-10 col-10 bg-dark shadow border-start py-2 position-fixed top-0 end-0">
+                <div style="z-index: 100" class="ms-auto col-lg-10 col-md-10 col-sm-10 col-10 bg-dark shadow border-start py-2 position-fixed top-0 end-0">
                     <div class="w-100 d-flex justify-content-between align-items-center">
                         <button id="burger" class="d-none btn">
                             <i class="bi bi-list fs-3 text-white" ></i>
@@ -41,7 +41,7 @@
 
                         <div class="col-12 d-flex justify-content-center align-items-center flex-column mt-3">
                             <a href="{{url_for('admin.index')}}" class="d-flex flex-column justify-content-center align-items-center">
-                                <img class="img-fluid rounded-circle" src="{{ url_for('web.serve_app_logo') }}" width="80px">
+                                <img class="img-fluid rounded-circle" src="{{ serve_app_logo() }}" width="80px">
                                 <h6 class="my-2 text-white english-font text-center">Admin - {{ GetAdmin.Username | truncate(15, True, "...") }}</h6>
                             </a>
                         </div>
@@ -180,8 +180,11 @@
                                                 <i class="bi bi-person-up mx-2 text-warning fs-5"></i>
                                                 <span>مدیریت ادمین ها</span>
                                             </a>
-
+                                            <a href="{{ url_for('admin.admin_logs_get') }}" class="d-block px-3 py-2 my-2 text-white text-decoration-underline hover-item {{ ctx.admin_logs }}">
+                                                <i class="bi bi-door-open-fill mx-2 text-warning fs-5"></i>
+                                                <span>ورود های امنیتی به سیستم</span>
                                             </a>
+
                                             <a href="{{ url_for('admin.setting_get') }}" class="d-block px-3 py-2 my-2 text-white text-decoration-underline hover-item {{ ctx.setting }}">
                                                 <i class="bi bi-gear mx-2 text-warning fs-5"></i>
                                                 <span>تنظیمات</span>
