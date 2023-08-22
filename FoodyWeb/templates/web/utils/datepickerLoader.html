@@ -8,7 +8,8 @@ document: http://behzadi.github.io/persianDatepicker/#usage
 
 #}
 
-<link href="{{ url_for('web.Serve', path='PersiandatePicker/css/persianDatepicker-default.css') }}" type="text/css" rel="stylesheet" >
+<link href="{{ 'PersiandatePicker/css/persianDatepicker-default.css' | Serve }}" type="text/css" rel="stylesheet" >
 {#<script src="{{ url_for('web.Serve', path='PersiandatePicker/js/jquery-1.10.1.min.js') }}"></script>#}
-<script src="https://code.jquery.com/jquery-3.7.0.min.js" integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
-<script src="{{ url_for('web.Serve', path='PersiandatePicker/js/persianDatepicker.min.js') }}"></script>
+<script src="https://code.jquery.com/jquery-3.7.0.min.js"
+integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
+<script src="{{ 'PersiandatePicker/js/persianDatepicker.min.js' | Serve }}"></script>
