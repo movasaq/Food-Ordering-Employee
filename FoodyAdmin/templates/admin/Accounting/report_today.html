@@ -48,35 +48,39 @@
 
             <div dir="rtl" class="accordion my-3 shadow" id="accordionContainer">
 
-                {% for record in ctx.sections_order %}
 
-                    {% with id = uuid4() %}
-                    <div class="accordion-item ">
-                        <h2 class="accordion-header">
-                          <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#ID{{ id }}"
-                          aria-expanded="true" aria-controls="collapseOne">
-                             [{{ ctx.sections_order[record] | length }}] - {{ record }}
-                          </button>
-                        </h2>
-                        <div id="ID{{ id }}" class="accordion-collapse collapse" data-bs-parent="#accordionContainer">
-                            <table class="table table-responsive table-dark table-bordered table-hover m-0 p-0">
-                                  <div class="accordion-body p-0 m-0">
-                                        <tbody>
-                                            {% for inner_Record in ctx.sections_order[record] %}
-                                                        <tr>
-                                                            <td>{{ loop.index }}</td>
-                                                            <td>{{ inner_Record.UserID  | GetUserName }}</td>
-                                                            <td>{{ inner_Record.FoodID | GetFoodName }}</td>
-                                                        </tr>
-                                            {% endfor %}
-                                        </tbody>
-                                  </div>
-                            </table>
+                {% if ctx.sections_order %}
+                    {% for record in ctx.sections_order %}
+                        {% with id = uuid4() %}
+                        <div class="accordion-item ">
+                            <h2 class="accordion-header">
+                              <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#ID{{ id }}"
+                              aria-expanded="true" aria-controls="collapseOne">
+                                 [{{ ctx.sections_order[record] | length }}] - {{ record }}
+                              </button>
+                            </h2>
+                            <div id="ID{{ id }}" class="accordion-collapse collapse" data-bs-parent="#accordionContainer">
+                                <table class="table table-responsive table-dark table-bordered table-hover m-0 p-0">
+                                      <div class="accordion-body p-0 m-0">
+                                            <tbody>
+                                                {% for inner_Record in ctx.sections_order[record] %}
+                                                            <tr>
+                                                                <td>{{ loop.index }}</td>
+                                                                <td>{{ inner_Record.UserID  | GetUserName }}</td>
+                                                                <td>{{ inner_Record.FoodID | GetFoodName }}</td>
+                                                            </tr>
+                                                {% endfor %}
+                                            </tbody>
+                                      </div>
+                                </table>
+                            </div>
                         </div>
-                    </div>
-                    {% endwith %}
+                        {% endwith %}
+                    {% endfor %}
+                {% else %}
+                    <h2 class="text-center my-5 text-danger">سفارشی برای امروز ثبت نشده است</h2>
+                {% endif %}
 
-                {% endfor %}
 
 
 
@@ -93,12 +97,12 @@
 
     <script>
         window.addEventListener("beforeprint", (event)=>{
-            document.querySelectorAll(".accordion-collapse").forEach(each=>{
+            document.querySelectorAll("#accordionContainer .accordion-collapse").forEach(each=>{
                 each.classList.add("show")
             })
         })
         window.addEventListener("afterprint", (event)=>{
-            document.querySelectorAll(".accordion-collapse").forEach(each=>{
+            document.querySelectorAll("#accordionContainer .accordion-collapse").forEach(each=>{
                 each.classList.remove("show")
             })
         })
